@@ -5,7 +5,7 @@ variable "project" {
 
 variable "env" {
 	description = "Environment"
-	default = "PROD"
+	default = "DEV"
 }
 
 variable "access_key" { 
@@ -33,9 +33,9 @@ variable "azs" {
 }
 
 variable "pub_subnets" {
-	default = "10.180.0.0/24,10.180.1.0/24,10.180.2.0/24"
+	default = "10.180.100.0/24,10.180.101.0/24,10.180.102.0/24"
 }
 
 variable "pri_subnets" {
-	default = "10.180.100.0/24,10.180.101.0/24,10.180.102.0/24"
+	default = "10.180.110.0/24,10.180.111.0/24,10.180.112.0/24"
 }
