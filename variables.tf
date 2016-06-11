@@ -1,13 +1,17 @@
-#Default region
-variable "aws_region" {
-	description = "Default AWS Region"
-	default = "eu-west-1"
+variable "access_key" { 
+  description = "AWS access key"
 }
-#VPC Name
-variable "vpc_name" {
-	default = "MyAPP"
+
+variable "secret_key" { 
+  description = "AWS secret access key"
 }
-#VPC Cidr Block
-variable "cidr_block" {
-	default = "10.100.0.0/16"
+
+variable "region"     { 
+  description = "AWS region to host your network"
+  default     = "eu-west-1" 
+}
+
+variable "vpc_cidr" {
+  description = "CIDR for VPC"
+  default     = "10.180.0.0/16"
 }
