@@ -8,6 +8,11 @@ variable "env" {
 	default = "DEV"
 }
 
+variable "size" {
+	description = "Used to specify no. of subnets and AZs"
+	default = "2"
+}
+
 variable "access_key" { 
   description = "AWS access key"
 }
@@ -23,7 +28,7 @@ variable "region"     {
 
 variable "vpc_cidr" {
   description = "CIDR for VPC"
-  default     = "10.180.0.0/16"
+  default     = "10.190.0.0/16"
 }
 
 #Variables with multiple elemnets stored as comma sep'd strings to pass through modules
@@ -33,9 +38,9 @@ variable "azs" {
 }
 
 variable "pub_subnets" {
-	default = "10.180.100.0/24,10.180.101.0/24,10.180.102.0/24"
+	default = "10.190.0.0/24,10.190.1.0/24,10.190.2.0/24"
 }
 
 variable "pri_subnets" {
-	default = "10.180.110.0/24,10.180.111.0/24,10.180.112.0/24"
+	default = "10.190.10.0/24,10.190.11.0/24,10.190.12.0/24"
 }
