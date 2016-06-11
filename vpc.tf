@@ -16,28 +16,32 @@ resource "aws_vpc" "MyApp-PROD" {
 
 resource "aws_subnet" "MyApp-PROD-PUB-NET-1A" {
 	vpc_id = "${aws_vpc.MyApp-PROD.id}"
-	cidr_block = "{var.net_prod_pub_1a}"
+	cidr_block = "${var.net_prod_pub_1a}"
+	availability_zone = "eu-west-1a"
 	tags {
 		Name = "MyApp-PROD-PUB-NET-1A"
 	}
 }
 resource "aws_subnet" "MyApp-PROD-PUB-NET-1B" {
 	vpc_id = "${aws_vpc.MyApp-PROD.id}"
-	cidr_block = "{var.net_prod_pub_1b}"
+	cidr_block = "${var.net_prod_pub_1b}"
+	availability_zone = "eu-west-1b"
 	tags {
 		Name = "MyApp-PROD-PUB-NET-1B"
 	}
 }
 resource "aws_subnet" "MyApp-PROD-PRI-NET-1A" {
 	vpc_id = "${aws_vpc.MyApp-PROD.id}"
-	cidr_block = "{var.net_prod_pri_1a}"
+	cidr_block = "${var.net_prod_pri_1a}"
+	availability_zone = "eu-west-1a"
 	tags {
 		Name = "MyApp-PROD-PRI-NET-1A"
 	}
 }
 resource "aws_subnet" "MyApp-PROD-PRI-NET-1B" {
 	vpc_id = "${aws_vpc.MyApp-PROD.id}"
-	cidr_block = "{var.net_prod_pri_1b}"
+	cidr_block = "${var.net_prod_pri_1b}"
+	availability_zone = "eu-west-1b"
 	tags {
 		Name = "MyApp-PROD-PRI-NET-1B"
 	}
