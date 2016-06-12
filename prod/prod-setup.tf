@@ -6,7 +6,7 @@ provider "aws" {
 
 module "vpc" {
 	source ="../module_vpc"
-	name = "${var.project}-${var.env}-VPC"
+	name = "${var.project}-${var.env}"
 	cidr = "${var.vpc_cidr}"
 
 }	
@@ -14,7 +14,7 @@ module "vpc" {
 module "pub_subnets" {
 	source = "../module_pub_subnets"
 	vpc_id = "${module.vpc.vpc_id}"
-	name = "${var.project}-${var.env}-NET"
+	name = "${var.project}-${var.env}"
 	pub_subnets = "${var.pub_subnets}"
 	azs = "${var.azs}"
 }
@@ -22,7 +22,7 @@ module "pub_subnets" {
 module "pri_subnets" {
 	source = "../module_pri_subnets"
 	vpc_id = "${module.vpc.vpc_id}"
-	name = "${var.project}-${var.env}-NET"
+	name = "${var.project}-${var.env}"
 	pri_subnets = "${var.pri_subnets}"
 	azs = "${var.azs}"
 }

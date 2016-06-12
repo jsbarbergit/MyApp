@@ -8,7 +8,7 @@ variable "size" {}
 resource "aws_route_table" "rt" {
         vpc_id = "${var.vpc_id}"
         tags = {
-	        Name = "${var.name}-PRI-RT"
+	        Name = "${var.name}-NET-PRI-RT"
 	}
 }
 
@@ -19,7 +19,7 @@ resource "aws_subnet" "private_subnets" {
 	availability_zone = "${element(split(",", var.azs), count.index)}"
 	count = "${var.size}"
 	tags = {
-		Name = "${var.name}-PRI-${element(split(",", var.azs), count.index)}"
+		Name = "${var.name}-NET-PRI-${element(split(",", var.azs), count.index)}"
 	}
 }
 

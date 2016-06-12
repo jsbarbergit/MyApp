@@ -18,7 +18,7 @@ resource "aws_route_table" "rt" {
 		gateway_id = "${aws_internet_gateway.gw.id}"
 	}
 	tags = {
-		Name = "${var.name}-PUB-RT" 
+		Name = "${var.name}-NET-PUB-RT" 
 	}
 }
 
@@ -29,7 +29,7 @@ resource "aws_subnet" "public_subnets" {
 	availability_zone = "${element(split(",", var.azs), count.index)}"
 	count = "${var.size}"
 	tags = {
-		Name = "${var.name}-PUB-${element(split(",", var.azs), count.index)}"
+		Name = "${var.name}-NET-PUB-${element(split(",", var.azs), count.index)}"
 	}
 }
 
