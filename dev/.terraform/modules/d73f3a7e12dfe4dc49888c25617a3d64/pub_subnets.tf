@@ -40,4 +40,17 @@ resource "aws_route_table_association" "rtassoc" {
 	count = "${var.size}"
 }
 
+#Create an EIP for use with NAT Gateway
+resource "aws_eip" "natgw" {
+	vpc = true
+}
+
+#Create NAT Gateway in 1st subnet only
+resource "aws_nat_gateway" "natgw" {
+	allocation_id = "${aws_eip.natgw.id}"
+	subnet_id = "${aws_subnet.public_subnets.0.id}"
+	depends_on = ["aws_internet_gateway.gw"]
+}
+
 output "subnet_ids" { value = "${join(",", aws_subnet.public_subnets.*.id)}" }
+output "natgw_id" { value = "${aws_nat_gateway.natgw.id}" }

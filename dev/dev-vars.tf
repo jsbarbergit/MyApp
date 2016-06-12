@@ -44,3 +44,24 @@ variable "pub_subnets" {
 variable "pri_subnets" {
 	default = "10.190.10.0/24,10.190.11.0/24,10.190.12.0/24"
 }
+
+#Key pair name
+variable "key_name" {
+	default = "jb-bjss-keypair"
+}
+
+#AMI ID & size of Web Server
+variable "web_ami" {
+	default = "ami-c39604b0"
+}
+variable "web_size" {
+	default = "t2.micro"
+}
+
+#WEB ASG Settings
+variable "asg_max" {
+	default = "1"
+}
+variable "asg_min" {
+	default = "1"
+}

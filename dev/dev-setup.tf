@@ -28,6 +28,7 @@ module "pri_subnets" {
 	size = "${var.size}"
 	pri_subnets = "${var.pri_subnets}"
 	azs = "${var.azs}"
+	natgw = "${module.pub_subnets.natgw_id}"
 }
 
 #Define ELB
@@ -43,6 +44,45 @@ resource "aws_elb" "pubelb" {
 	}
 }
 
+#Define Launch Config
+resource "aws_launch_configuration" "web_lc" {
+	name = "${var.project}-${var.env}-PRI-WEB-LC"
+	image_id = "${var.web_ami}"
+	instance_type = "${var.web_size}"
+	key_name = "${var.key_name}"
+	security_groups = [ "${module.vpc.vpc_prisg}" ]
+	lifecycle {
+		create_before_destroy = true
+	}
+	user_data = "${file("web_data.sh")}"
+}
+
+#Create a list of AZs - based on count var
+resource "null_resource" "azs" {
+	count = "${var.size}"
+	triggers {
+		az = "${element(split(",", var.azs), count.index)}"
+	}
+}
+
+#ASG
+resource "aws_autoscaling_group" "web_asg" {
+	availability_zones = [ "${null_resource.azs.*.triggers.az}" ]
+#	availability_zones = [ "${element(split(",", var.azs), count.index)}" ]
+	name = "${var.project}-${var.env}-PRI-WEB-ASG"
+	max_size = "${var.asg_max}"
+	min_size = "${var.asg_min}"
+	desired_capacity = "${var.asg_min}"
+	load_balancers = [ "${aws_elb.pubelb.name}" ]
+	launch_configuration = "${aws_launch_configuration.web_lc.name}"
+	vpc_zone_identifier = [ "${module.pri_subnets.subnet_ids}" ]
+	tag {
+		key = "Name"
+		value = "${var.project}-${var.env}-PRI-WEB-EC2"
+		propagate_at_launch = "true"
+
+	}
+}
 
 #Outputs
 
@@ -55,3 +95,6 @@ output "vpc_prisg" { value = "${module.vpc.vpc_prisg}" }
 #Subnets
 output "pub_subnet_ids" { value = "${module.pub_subnets.subnet_ids}" }
 output "pri_subnet_ids" { value = "${module.pri_subnets.subnet_ids}" }
+
+#ELB
+output "elb-dns" { value = "${aws_elb.pubelb.dns_name}" }
